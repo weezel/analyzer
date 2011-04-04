@@ -7,6 +7,17 @@ import mimetypes
 import os
 import sys
 
+#### Define some variables here. Other changes not needed ####
+# Directory which contains all versions of the program. Absolute
+# path needed.
+#
+abspath = "/Users/mepiispa/Downloads/recoder/test/"
+####
+# Where ccfinder can be found
+#
+ccfinder_prog = "~/Downloads/ccfx-osx/ccfx"
+#
+#### No changes needed after this line ####
 
 allfiles = glob("RECODER*")
 allfiles.sort()
@@ -46,25 +57,36 @@ def visitDir(args, dirname, filenames):
 
 
 def main():
+    global abspath
+    global ccfinder_prog
     global dirlinecount
 
-    for j in allfiles:
-        print "Comparing against: %s" % (j)
-        for i in allfiles:
-            if i == j:
-                continue
-            #print "%s" % i
+    print "Versions",
+    for i in allfiles:
+        print ",%s" % i,
+    print "\n",
+
+    for n, j in enumerate(allfiles):
+        print j + (" ," * (n+1)),
+
+        for i in range(n + 1, len(allfiles)):
+            # Compare current directory against all version dirs
+            os.path.walk(j, visitDir, None) # Cur
+            os.path.walk(allfiles[i], visitDir, None) # Other
 
             # Generate report here
-            outtext = commands.getoutput("" + i)
-            print "------- %s --------" % outtext
+            runcmd = ccfinder_prog + " d java -dn " + abspath + j + "/src/recoder/ -is -dn " + abspath + allfiles[i] + "/src/recoder/ -w f-w-g+"
+            outtext = commands.getoutput(runcmd)
 
-        # Visit directory and count count of lines from .java files
-        os.path.walk(j, visitDir, None)
-        print "Loc: %d" % dirlinecount
-        dirlinecount = 0
+            # awk sums up the columns in here
+            runcmd = ccfinder_prog + " m a.ccfxd -w | awk '{ s+=$2 } END {print s}'"
+            outtext = commands.getoutput(runcmd)
 
-        print ""
+            loc_div = float(outtext) / dirlinecount
+            print ",%.3f" % (loc_div),
+
+            dirlinecount = 0
+        print "\n",
 
 
 if __name__ == "__main__":
