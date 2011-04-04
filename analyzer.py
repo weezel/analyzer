@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from glob import glob
+import commands
 import mimetypes
 import os
 import sys
@@ -48,13 +49,15 @@ def main():
     global dirlinecount
 
     for j in allfiles:
-
         print "Comparing against: %s" % (j)
         for i in allfiles:
             if i == j:
                 continue
             #print "%s" % i
+
             # Generate report here
+            outtext = commands.getoutput("" + i)
+            print "------- %s --------" % outtext
 
         # Visit directory and count count of lines from .java files
         os.path.walk(j, visitDir, None)
