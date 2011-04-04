@@ -1,4 +1,4 @@
 ## Obtain
-git clone blaablaa
+	git clone git@github.com:weezel/analyzer.git
 ## Use
-python analyzer.py > mylog.txt
+	python analyzer.py > mylog.txt
