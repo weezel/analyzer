@@ -1,5 +1,5 @@
-#example file:
-#set datafile separator "\s"
+reset
+set logscale y
 set terminal png size 1024,768
 set output "monthly_commits.png"
 set ylabel "Commits"
@@ -9,11 +9,9 @@ set timefmt "%Y-%m-%d"
 set format x "%Y-%m"
 set xlabel "Date"
 set xtics nomirror rotate by -45 scale 0
-set multiplot
-#plot "plotdata.log" using ($2):3 with linespoints title "Additions", "plotdata.log" using ($3) with linespoints title "Changes", "plotdata.log" using ($4) with linespoints title "Deletions"
-plot "monthly_commits.data" using 1:3 with linespoints title "Changes", \
-"monthly_commits.data" using 2:3 with linespoints title "Insertions", \
-"monthly_commits.data" using 3:3 with linespoints title "Deletions"
+# Colours
+# 1=red 2=grn 3=blue
 
-unset multiplot
-
+plot 'monthly_commits.plot' using 1:2 with linespoints lt 3 title "Changes", \
+	'' using 1:3 with linespoints lt 2 title "Insertions", \
+	'' using 1:4 with linespoints lt 1 title "Deletions"
