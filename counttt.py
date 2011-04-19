@@ -1,16 +1,19 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from datetime import datetime
 import commands
 
 for year in range(1995, 2011):
-    print "Year: %d" % year
+    #print "Year: %d" % year
     for month in range(2,12):
         runcmd = """git log --since="%d-%d-1" --until="%d-%d-1" --shortstat --oneline | grep 'files changed, ' | awk '{ s1+=$1; s2+=$4; s3+=$6 } END {print s1, s2, s3}'"""\
                 % (year, month - 1, year, month)
         runresult = commands.getoutput(runcmd)
-        print "Month: %d" % (month - 1),
-        print "\t" + runresult
+        #print "Month: %d" % (month - 1),
+        #print "\t" + runresult
+        date = datetime(year, month, 1)
+        print "%s %s" % (date.strftime("%Y-%m-%d"), runresult)
 
 
 # $ python counttt.py
