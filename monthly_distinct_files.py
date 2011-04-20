@@ -15,14 +15,18 @@ for year in range(1995, 2012):
             break
         # December makes difference for us
         if month == 12:
-            runcmd = """git log --since="%d-%d-1 00:00:00" --until="%d-%d-31 23:59:59" --pretty="%%an %%cn"|\
-                    sort |\
+            runcmd = """git log --since="%d-%d-1 00:00:00" --until="%d-%d-31 23:59:59" --raw |\
+                    grep -E "^:"|\
+                    awk '{print $5, $6}'|\
+                    sort -k 2  |\
                     uniq |\
                     wc -l"""\
                     % (year, month, year, month)
         else:
-            runcmd = """git log --since="%d-%d-1 00:00:00" --until="%d-%d-1 00:00:00" --pretty="%%an %%cn"|\
-                    sort |\
+          runcmd = """git log --since="%d-%d-1 00:00:00" --until="%d-%d-1 00:00:00" --raw |\
+                    grep -E "^:"|\
+                    awk '{print $5, $6}'|\
+                    sort -k 2  |\
                     uniq |\
                     wc -l"""\
                     % (year, month, year, nextmonth)
@@ -31,6 +35,7 @@ for year in range(1995, 2012):
         print "%s %s" % (date.strftime("%Y-%m-%d"), runresult)
 
 
-# Distinct developers
-# git log --since="2007-5-1" --until="2007-12-1" --pretty="%an %cn"| sort | uniq | wc -l
+# Count distinct file changes per month
+# git log --since="2010-1-1" --until="2010-2-1" --raw | grep -E "^:"|awk '{print $5, $6}'| grep -E "^[A-Z]\s"
+# git log --since="2010-1-1" --until="2010-2-1" --raw | grep -E "^:"|awk '{print $5, $6}'| sort -k 2  | uniq | wc -l
 

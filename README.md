@@ -1,11 +1,25 @@
 ## Obtain
+
 	git clone git@github.com:weezel/analyzer.git
 
+Recommended directory structure is something like this:
+
+	.
+	..
+	glibc
+	analyzer
+
+Add some needed softlinks:
+
+	cd glibc/
+	ln -s ../analyzer/*.py .
+	ln -s ../analyzer/*.gnu .
+	ln -s ../analyzer/*.sh .
+
+...and now we are done.
+
 ## Usage
-`./monthly_commits.sh`
+Run `./generate_stats.sh` under the glibc directory and
 
-or perform the following commands:
+the script will guide for further information.
 
-	python monthly_commits.py > monthly_commits.plot
-	gnuplot monthly_commits.gnu
-	adore monthly_commits.png
