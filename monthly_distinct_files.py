@@ -15,18 +15,18 @@ for year in range(1995, 2012):
             break
         # December makes difference for us
         if month == 12:
-            runcmd = """git log --since="%d-%d-1 00:00:00" --until="%d-%d-31 23:59:59" --raw |\
+            runcmd = """git log --since="%d-%d-1 00:00:00" --until="%d-%d-31 23:59:59" -C --raw |\
                     grep -E "^:"|\
-                    awk '{print $5, $6}'|\
-                    sort -k 2  |\
+                    awk '{print $6}'|\
+                    sort |\
                     uniq |\
                     wc -l"""\
                     % (year, month, year, month)
         else:
-          runcmd = """git log --since="%d-%d-1 00:00:00" --until="%d-%d-1 00:00:00" --raw |\
+          runcmd = """git log --since="%d-%d-1 00:00:00" --until="%d-%d-1 00:00:00" -C --raw |\
                     grep -E "^:"|\
-                    awk '{print $5, $6}'|\
-                    sort -k 2  |\
+                    awk '{print $6}'|\
+                    sort |\
                     uniq |\
                     wc -l"""\
                     % (year, month, year, nextmonth)
