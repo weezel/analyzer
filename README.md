@@ -4,6 +4,10 @@
 * Python
 * Unix tools (awk, grep, sort, uniq, wc)
 
+...and hopefully you understand that these
+
+should be found from $PATH.
+
 
 ## Obtain
 
