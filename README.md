@@ -1,3 +1,10 @@
+## Depedencies
+* Git (naturally)
+* Gnuplot
+* Python
+* Unix tools (awk, grep, sort, uniq, wc)
+
+
 ## Obtain
 
 	git clone git@github.com:weezel/analyzer.git
