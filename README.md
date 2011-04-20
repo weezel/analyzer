@@ -1,4 +1,4 @@
-## Depedencies
+## Dependencies
 * Git (naturally)
 * Gnuplot
 * Python
